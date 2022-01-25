@@ -8,8 +8,8 @@ module Palette
       def initialize(models)
         @mappings_hashes = {}
         models.each do |model|
-          next if @mappings_hashes[model.document_type.to_sym].present?
-          @mappings_hashes[model.document_type.to_sym] = model.mappings.to_hash[model.document_type.to_sym][:properties]
+          next if @mappings_hashes[model.index_name.to_sym].present?
+          @mappings_hashes[model.index_name.to_sym] = model.mappings.to_hash[:properties]
         end
       end
 
