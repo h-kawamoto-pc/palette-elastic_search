@@ -126,8 +126,9 @@ module Palette
         end
 
         def check_deprecated_analyzer
-          self.mappings.to_hash[self.model_name.param_key.to_sym][:properties].keys.each do |key|
-            case self.mappings.to_hash[self.model_name.param_key.to_sym][:properties][key][:analyzer]
+          properties = self.mappings.to_hash[:properties]
+          properties.keys.each do |key|
+            case properties[key][:analyzer]
             when 'bigram'
               Rails.logger.warn 'bigram is deprecated. use ngram instead'
             end
