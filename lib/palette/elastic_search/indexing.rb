@@ -77,11 +77,16 @@ module Palette
 
         def indexing(new_index_name, options = {})
           check_deprecated_analyzer
-          self.__elasticsearch__.client.indices.create index: new_index_name,
-                                                       body: {
+          self.__elasticsearch__.client.indices.create({ index: new_index_name,
+                                                         body: {
+                                                           settings: {
+                                                             index: { max_ngram_diff: 100 }
+                                                           }
+                                                         }.deep_merge(
                                                            settings: self.settings.to_hash,
                                                            mappings: self.mappings.to_hash
-                                                       }
+                                                         )
+                                                       })
           self.__elasticsearch__.import(index: new_index_name, query: options[:query])
         end
 
